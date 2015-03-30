@@ -7,16 +7,16 @@
     "packages": [
         {
             "name": "mf2/mf2",
-            "version": "v0.2.4",
+            "version": "v0.2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/indieweb/php-mf2.git",
-                "reference": "ab3ea1b30c3bf1e1d9f50d2580cb79b7e80c37a4"
+                "reference": "ad1ee037555be7f3b2ea1d99e063e56207cf2a1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/indieweb/php-mf2/zipball/ab3ea1b30c3bf1e1d9f50d2580cb79b7e80c37a4",
-                "reference": "ab3ea1b30c3bf1e1d9f50d2580cb79b7e80c37a4",
+                "url": "https://api.github.com/repos/indieweb/php-mf2/zipball/ad1ee037555be7f3b2ea1d99e063e56207cf2a1d",
+                "reference": "ad1ee037555be7f3b2ea1d99e063e56207cf2a1d",
                 "shasum": ""
             },
             "require": {
@@ -56,7 +56,7 @@
                 "parser",
                 "semantic"
             ],
-            "time": "2013-11-27 19:35:33"
+            "time": "2014-07-23 09:37:36"
         }
     ],
     "packages-dev": [
