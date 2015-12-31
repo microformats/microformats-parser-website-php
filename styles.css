@@ -1,0 +1,29 @@
+body {
+  background-color: #fff;
+  font-family: verdana;
+  margin: 0;
+  padding: 0;
+}
+#mf2 {
+  margin: 40px auto 0 auto;
+  width: 620px;
+  font-size: 10pt;
+}
+#mf2 .input input, #mf2 .input textarea {
+  font-size: 10pt;
+  font-family: "Courier New", Courier, fixed-width;
+}
+input.text, textarea {
+  border: 1px #ccc solid;
+}
+form {
+  margin: 0;
+}
+.parser {
+  background: #ddd;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 30px;
+}

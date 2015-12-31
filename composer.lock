@@ -1,22 +1,23 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
     "hash": "95b24086c8eb4ea7bc78aab196a70b1d",
     "packages": [
         {
             "name": "mf2/mf2",
-            "version": "v0.2.9",
+            "version": "v0.2.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/indieweb/php-mf2.git",
-                "reference": "ad1ee037555be7f3b2ea1d99e063e56207cf2a1d"
+                "reference": "6701504876d6c9242eb310b35f41d40d9785ab4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/indieweb/php-mf2/zipball/ad1ee037555be7f3b2ea1d99e063e56207cf2a1d",
-                "reference": "ad1ee037555be7f3b2ea1d99e063e56207cf2a1d",
+                "url": "https://api.github.com/repos/indieweb/php-mf2/zipball/6701504876d6c9242eb310b35f41d40d9785ab4e",
+                "reference": "6701504876d6c9242eb310b35f41d40d9785ab4e",
                 "shasum": ""
             },
             "require": {
@@ -56,23 +57,15 @@
                 "parser",
                 "semantic"
             ],
-            "time": "2014-07-23 09:37:36"
+            "time": "2015-07-12 14:10:01"
         }
     ],
-    "packages-dev": [
-
-    ],
-    "aliases": [
-
-    ],
+    "packages-dev": [],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
-    "platform": [
-
-    ],
-    "platform-dev": [
-
-    ]
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
 }
