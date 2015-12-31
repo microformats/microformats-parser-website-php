@@ -21,8 +21,12 @@ $debugMsg = array(
 );
 
 if(get('url')) {
+  $url = get('url');
+  if(!preg_match('/^http/', $url))
+    $url = 'http://' . $url;
+
   $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, get('url'));
+  curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36');
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -40,7 +44,7 @@ if(get('url')) {
       $html = curl_exec($ch);
   }
 
-	$parser = new Parser($html, get('url'), true);
+	$parser = new Parser($html, $url, true);
 	$output = $parser->parse();
   $output['debug'] = $debugMsg;
 
@@ -49,7 +53,11 @@ if(get('url')) {
 
 } elseif(post('html')) {
 
-	$parser = new Parser(post('html'), post('url'), true);
+  $url = post('url');
+  if($url && !preg_match('/^http/', $url))
+    $url = 'http://' . $url;
+
+	$parser = new Parser(post('html'), $url, true);
 	$output = $parser->parse();
 
   if(post('save') == 1) {
@@ -59,7 +67,7 @@ if(get('url')) {
     preg_match('/^(\d{6})(\d{11})$/',$id,$match);
     @mkdir(dirname(__FILE__).'/data/'.$match[1], 0755, true);
     file_put_contents(dirname(__FILE__).'/data/'.$match[1].'/'.$match[2].'.url', json_encode(array(
-      'url' => post('url'),
+      'url' => $url,
       'show_html' => post('show_html'),
     )));
     file_put_contents(dirname(__FILE__).'/data/'.$match[1].'/'.$match[2].'.html', post('html'));
