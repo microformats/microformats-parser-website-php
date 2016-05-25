@@ -27,9 +27,11 @@ if(get('url')) {
 
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36');
+  #curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36');
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Microformats2 parser '.$version.' (via http://pin13.net/mf2/) Mozilla/5.0 Chrome/29.0.1547.57 Safari/537.36');  
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
   if(get('debug')) {
       curl_setopt($ch, CURLOPT_SSLVERSION,3);
@@ -44,6 +46,7 @@ if(get('url')) {
       $html = curl_exec($ch);
   }
 
+  	$url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
 	$parser = new Parser($html, $url, true);
 	$output = $parser->parse();
   $output['debug'] = $debugMsg;
