@@ -12,7 +12,7 @@ foreach($composer->packages as $pkg) {
 }
 
 $debugMsg = array(
-  'package' => 'https://packagist.org/indieweb/php-mf2',
+  'package' => 'https://packagist.org/mf2/mf2',
   'version' => $version,
   'note' => array(
     'This output was generated from the php-mf2 library available at https://github.com/indieweb/php-mf2',
@@ -28,7 +28,7 @@ if(get('url')) {
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
   #curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36');
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Microformats2 parser '.$version.' (via http://pin13.net/mf2/) Mozilla/5.0 Chrome/29.0.1547.57 Safari/537.36');  
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Microformats2 parser '.$version.' (via https://pin13.net/mf2/) Mozilla/5.0 Chrome/29.0.1547.57 Safari/537.36');  
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
@@ -51,8 +51,13 @@ if(get('url')) {
 	$output = $parser->parse();
   $output['debug'] = $debugMsg;
 
-	header('Content-Type: application/json');
-	echo prettyPrintJSON(json_encode($output));
+	if(array_key_exists('callback', $_GET)) {
+		header('Content-type: text/javascript');
+		echo $_GET['callback'].'('.json_encode($output).');';
+	} else {
+		header('Content-Type: application/json');
+		echo json_encode($output, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
+	}
 
 } elseif(post('html')) {
 
@@ -77,7 +82,7 @@ if(get('url')) {
     header('Location: '.$scheme.'://'.$_SERVER['SERVER_NAME'].'/mf2/?id='.$id);
   } else {
     $output['debug'] = $debugMsg;
-  	$json = prettyPrintJSON(json_encode($output));
+  	$json = json_encode($output, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
 
     $html = post('html');
     $url = post('url');
@@ -108,7 +113,7 @@ if(get('url')) {
     $parser = new Parser($html, $url, true);
   	$output = $parser->parse();
     $output['debug'] = $debugMsg;
-    $json = prettyPrintJSON(json_encode($output));
+    $json = json_encode($output, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
 
     require('result.php');
   }
@@ -127,81 +132,3 @@ function post($k, $default=null) {
 	return array_key_exists($k, $_POST) ? $_POST[$k] : $default;
 }
 
-
-function prettyPrintJSON($json)
-{
-    $tab = "  ";
-    $new_json = "";
-    $indent_level = 0;
-    $in_string = false;
-
-    $json_obj = json_decode($json);
-
-    if($json_obj === false)
-        return false;
-
-    $json = json_encode($json_obj);
-    $len = strlen($json);
-
-    for($c = 0; $c < $len; $c++)
-    {
-        $char = $json[$c];
-        switch($char)
-        {
-            case '{':
-            case '[':
-                if(!$in_string)
-                {
-                    $new_json .= $char . "\n" . str_repeat($tab, $indent_level+1);
-                    $indent_level++;
-                }
-                else
-                {
-                    $new_json .= $char;
-                }
-                break;
-            case '}':
-            case ']':
-                if(!$in_string)
-                {
-                    $indent_level--;
-                    $new_json .= "\n" . str_repeat($tab, $indent_level) . $char;
-                }
-                else
-                {
-                    $new_json .= $char;
-                }
-                break;
-            case ',':
-                if(!$in_string)
-                {
-                    $new_json .= ",\n" . str_repeat($tab, $indent_level);
-                }
-                else
-                {
-                    $new_json .= $char;
-                }
-                break;
-            case ':':
-                if(!$in_string)
-                {
-                    $new_json .= ": ";
-                }
-                else
-                {
-                    $new_json .= $char;
-                }
-                break;
-            case '"':
-                if($c > 0 && $json[$c-1] != '\\')
-                {
-                    $in_string = !$in_string;
-                }
-            default:
-                $new_json .= $char;
-                break;
-        }
-    }
-
-    return $new_json;
-}
