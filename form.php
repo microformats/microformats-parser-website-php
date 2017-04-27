@@ -30,7 +30,7 @@
 			<p>Drag this link to your bookmarks toolbar to parse a page with one click!<br>
   			<a href="javascript:(function(){if(document.location.hostname=='pin13.net'&&document.location.pathname=='/mf2/'){document.location.href=decodeURIComponent(document.location.search.slice(5))}else{%20document.location.href='http://pin13.net/mf2?url='+encodeURIComponent(document.location.href);}}())">mf2 parser</a></p>
 
-  		<p><a href="http://indiewebcamp.com/microformats">What is this?</a></p>
+  		<p><a href="https://indieweb.org/microformats">about microformats</a> &bull; <a href="https://github.com/aaronpk/mf2-test">source code</a></p>
 
 	</div>
 </body>
