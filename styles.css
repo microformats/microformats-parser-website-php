@@ -12,3 +12,12 @@ form .form-control:disabled {
   background: #efefef;
   color: black;
 }
+
+#json {
+  font-size: 0.7em;
+}
+
+/* disable bootstrap animations */
+.form-control, .btn {
+  transition: none;
+}
