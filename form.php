@@ -15,12 +15,10 @@
 
     <h1 class="mt-5 mb-3">
       Microformats Parser (PHP)
-      <!-- TODO print version of php-mf2 here -->
+      <?= $version ?>
     </h1>
 
-    <form action="/mf2" accept-charset="UTF-8" method="get">
-      <input name="utf8" type="hidden" value="&#x2713;" />
-
+    <form action="<?= $PATH ?>" accept-charset="UTF-8" method="get">
       <div class="form-group">
         <label for="url">Enter a URL</label>
         <input id="url" class="form-control form-control-lg" type="url" name="url" />
@@ -31,7 +29,7 @@
 
     <h2 class="h4 my-5">OR parse just a snippet of HTML</h2>
 
-    <form method="post" action="/mf2" class="mb-5">
+    <form method="post" action="<?= $PATH ?>" class="mb-5">
       <div class="form-group">
         <label for="html">HTML</label>
         <textarea id="html" name="html" rows="6" class="form-control form-control-lg"></textarea>
@@ -63,7 +61,7 @@
     <p>
       Drag this link to your bookmarks toolbar to parse a page with one click!<br>
     </p>
-    <a class="btn btn-primary btn-sm" href="javascript:(function(){if(document.location.hostname=='pin13.net'&&document.location.pathname=='/mf2/'){document.location.href=decodeURIComponent(document.location.search.slice(5))}else{%20document.location.href='http://pin13.net/mf2?url='+encodeURIComponent(document.location.href);}}())">mf2 parser</a>
+    <a class="btn btn-primary btn-sm" href="javascript:(function(){if(document.location.hostname=='pin13.net'&&document.location.pathname=='/mf2/'){document.location.href=decodeURIComponent(document.location.search.slice(5))}else{%20document.location.href='https://pin13.net/mf2/?url='+encodeURIComponent(document.location.href);}}())">mf2 parser</a>
     <hr>
 
     <footer class="my-5">

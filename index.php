@@ -12,13 +12,15 @@ foreach($composer->packages as $pkg) {
 }
 
 $debugMsg = array(
-  'package' => 'https://packagist.org/mf2/mf2',
+  'package' => 'https://packagist.org/packages/mf2/mf2',
   'version' => $version,
   'note' => array(
     'This output was generated from the php-mf2 library available at https://github.com/indieweb/php-mf2',
     'Please file any issues with the parser at https://github.com/indieweb/php-mf2/issues'
   )
 );
+
+$PATH = preg_replace('~index.php$~', '', $_SERVER['SCRIPT_NAME']);
 
 if(get('url')) {
   $url = get('url');
@@ -28,7 +30,7 @@ if(get('url')) {
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
   #curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36');
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Microformats2 parser '.$version.' (via https://pin13.net/mf2/) Mozilla/5.0 Chrome/29.0.1547.57 Safari/537.36');
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Microformats2 parser '.$version.' (via '.$_SERVER['SERVER_NAME'].$PATH.') Mozilla/5.0 Chrome/29.0.1547.57 Safari/537.36');
   curl_setopt($ch, CURLOPT_HTTPHEADER, ['Accept: text/html, */*']);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -47,18 +49,18 @@ if(get('url')) {
       $html = curl_exec($ch);
   }
 
-  	$url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-	$parser = new Parser($html, $url, true);
-	$output = $parser->parse();
+  $url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+  $parser = new Parser($html, $url, true);
+  $output = $parser->parse();
   $output['debug'] = $debugMsg;
 
-	if(array_key_exists('callback', $_GET)) {
-		header('Content-type: text/javascript');
-		echo $_GET['callback'].'('.json_encode($output).');';
-	} else {
-		header('Content-Type: application/json');
-		echo json_encode($output, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
-	}
+  if(array_key_exists('callback', $_GET)) {
+    header('Content-type: text/javascript');
+    echo $_GET['callback'].'('.json_encode($output).');';
+  } else {
+    header('Content-Type: application/json');
+    echo json_encode($output, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
+  }
 
 } elseif(post('html')) {
 
@@ -66,8 +68,8 @@ if(get('url')) {
   if($url && !preg_match('/^http/', $url))
     $url = 'http://' . $url;
 
-	$parser = new Parser(post('html'), $url, true);
-	$output = $parser->parse();
+  $parser = new Parser(post('html'), $url, true);
+  $output = $parser->parse();
 
   if(post('save') == 1) {
     $scheme = array_key_exists('REQUEST_SCHEME', $_SERVER) ? $_SERVER['REQUEST_SCHEME'] : 'http';
@@ -80,10 +82,10 @@ if(get('url')) {
       'show_html' => post('show_html'),
     )));
     file_put_contents(dirname(__FILE__).'/data/'.$match[1].'/'.$match[2].'.html', post('html'));
-    header('Location: '.$scheme.'://'.$_SERVER['SERVER_NAME'].'/mf2/?id='.$id);
+    header('Location: '.$scheme.'://'.$_SERVER['SERVER_NAME'].$PATH.'?id='.$id);
   } else {
     $output['debug'] = $debugMsg;
-  	$json = json_encode($output, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
+    $json = json_encode($output, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
 
     $html = post('html');
     $url = post('url');
@@ -112,7 +114,7 @@ if(get('url')) {
     $save_html = true;
 
     $parser = new Parser($html, $url, true);
-  	$output = $parser->parse();
+    $output = $parser->parse();
     $output['debug'] = $debugMsg;
     $json = json_encode($output, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
 
@@ -126,10 +128,10 @@ if(get('url')) {
 
 
 function get($k, $default=null) {
-	return array_key_exists($k, $_GET) ? $_GET[$k] : $default;
+  return array_key_exists($k, $_GET) ? $_GET[$k] : $default;
 }
 
 function post($k, $default=null) {
-	return array_key_exists($k, $_POST) ? $_POST[$k] : $default;
+  return array_key_exists($k, $_POST) ? $_POST[$k] : $default;
 }
 

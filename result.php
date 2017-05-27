@@ -15,10 +15,10 @@
 
     <h1 class="mt-5 mb-3">
       Microformats Parser (PHP)
-      <!-- TODO print version of php-mf2 here -->
+      <?= $version ?>
     </h1>
 
-    <form method="post" action="/mf2" class="mb-5">
+    <form method="post" action="<?= $PATH ?>" class="mb-5">
       <div class="form-group">
         <label for="html">HTML</label>
         <textarea id="html" name="html" rows="6" class="form-control form-control-lg"><?= htmlspecialchars($html) ?></textarea>
@@ -45,7 +45,7 @@
 
       <div class="form-group">
         <label for="json">JSON</label>
-        <textarea id="json" name="json" rows="6" class="form-control form-control-lg" disabled="disabled"><?= htmlspecialchars($json) ?></textarea>
+        <textarea id="json" name="json" rows="24" class="form-control form-control-lg" disabled="disabled"><?= htmlspecialchars($json) ?></textarea>
       </div>
 
       <button type="submit" class="btn btn-lg btn-success">Parse</button>
