@@ -8,6 +8,7 @@
 
   <link rel="stylesheet" href="bootstrap-4.0.0.css">
   <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body>
