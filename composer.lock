@@ -4,28 +4,29 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d39f74e2f6d59e36fd4c6b4dd8ca2a89",
     "content-hash": "9a7557154edc1c1964825dd574558cd6",
     "packages": [
         {
             "name": "mf2/mf2",
-            "version": "v0.3.0",
+            "version": "v0.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/indieweb/php-mf2.git",
-                "reference": "4fb2eb5365cbc0fd2e0c26ca748777d6c2539763"
+                "reference": "dc0d90d4ee30864bcf37cd3a8fc8db94f9134cc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/indieweb/php-mf2/zipball/4fb2eb5365cbc0fd2e0c26ca748777d6c2539763",
-                "reference": "4fb2eb5365cbc0fd2e0c26ca748777d6c2539763",
+                "url": "https://api.github.com/repos/indieweb/php-mf2/zipball/dc0d90d4ee30864bcf37cd3a8fc8db94f9134cc4",
+                "reference": "dc0d90d4ee30864bcf37cd3a8fc8db94f9134cc4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*"
+                "mf2/tests": "@dev",
+                "phpdocumentor/phpdocumentor": "v2.8.4",
+                "phpunit/phpunit": "4.8.*"
             },
             "suggest": {
                 "barnabywalters/mf-cleaner": "To more easily handle the canonical data php-mf2 gives you"
@@ -58,7 +59,7 @@
                 "parser",
                 "semantic"
             ],
-            "time": "2016-03-14 12:13:34"
+            "time": "2017-05-27T15:27:47+00:00"
         }
     ],
     "packages-dev": [],
