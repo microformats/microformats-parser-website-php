@@ -1,37 +1,87 @@
+<!DOCTYPE html>
 <html>
 <head>
-	<title>Microformats Parser</title>
-	<link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>PHP Microformats Parser</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-	<div id="mf2">
-    <h3>Microformats Parser</h3>
+  <main id="mf2" class="container">
 
-      <div class="parser">
-  			<form action="/mf2/" method="get">
-    			<div class="title">Enter URL:</div>
-  				<input type="text" name="url" style="width: 100%; padding: 2px;" class="text" /><br>
-  				<input type="submit" value="Parse" />
-  			</form>
+    <h1 class="mt-5 mb-3">
+      Microformats Parser (PHP)
+      <!-- TODO print version of php-mf2 here -->
+    </h1>
+
+    <form action="/mf2" accept-charset="UTF-8" method="get">
+      <input name="utf8" type="hidden" value="&#x2713;" />
+
+      <div class="form-group">
+        <label for="url">Enter a URL</label>
+        <input id="url" class="form-control form-control-lg" type="url" name="url" />
       </div>
 
-      <div class="parser input">
-  			<form action="/mf2/" method="post">
-    			<div class="title">HTML:</div>
-  				<textarea name="html" style="width: 100%; padding: 2px; height: 100px" class="text"></textarea><br>
-    			<div class="title">Base URL:</div>
-  				<input type="text" name="url" style="width: 100%; padding: 2px;" class="text" /><br>
-					<input type="checkbox" id="save" name="save" checked="checked" value="1"> Save HTML<br>
-					<input type="checkbox" id="show_html" name="show_html" value="1"> Render HTML in page<br>
-  				<input type="submit" value="Parse" />
-  			</form>
+      <button type="submit" class="btn btn-lg btn-success">Parse</button>
+    </form>
+
+    <h2 class="h4 my-5">OR parse just a snippet of HTML</h2>
+
+    <form method="post" action="/mf2" class="mb-5">
+      <div class="form-group">
+        <label for="html">HTML</label>
+        <textarea id="html" name="html" rows="6" class="form-control form-control-lg"></textarea>
       </div>
 
-			<p>Drag this link to your bookmarks toolbar to parse a page with one click!<br>
-  			<a href="javascript:(function(){if(document.location.hostname=='pin13.net'&&document.location.pathname=='/mf2/'){document.location.href=decodeURIComponent(document.location.search.slice(5))}else{%20document.location.href='http://pin13.net/mf2?url='+encodeURIComponent(document.location.href);}}())">mf2 parser</a></p>
+      <div class="form-group">
+        <label for="base-url">Base URL</label>
+        <input id="base-url" name="url" type="url" class="form-control form-control-lg" />
+      </div>
 
-  		<p><a href="https://indieweb.org/microformats">about microformats</a> &bull; <a href="https://github.com/aaronpk/mf2-test">source code</a></p>
+      <div class="form-check">
+        <label class="form-check-label" for="save">
+          <input id="save" name="save" class="form-check-input" type="checkbox" value="1" checked="checked">
+          Save HTML?
+        </label>
+      </div>
 
-	</div>
+      <div class="form-check">
+        <label class="form-check-label" for="show_html">
+          <input id="show_html" name="show_html" class="form-check-input" type="checkbox" value="1">
+          Render HTML in page?
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-lg btn-success">Parse</button>
+    </form>
+
+    <hr>
+    <p>
+      Drag this link to your bookmarks toolbar to parse a page with one click!<br>
+    </p>
+    <a class="btn btn-primary btn-sm" href="javascript:(function(){if(document.location.hostname=='pin13.net'&&document.location.pathname=='/mf2/'){document.location.href=decodeURIComponent(document.location.search.slice(5))}else{%20document.location.href='http://pin13.net/mf2?url='+encodeURIComponent(document.location.href);}}())">mf2 parser</a>
+    <hr>
+
+    <footer class="my-5">
+      <ul>
+        <li><a href="https://microformats.io">About Microformats</a></li>
+        <li><a href="https://github.com/aaronpk/mf2-test">Source code for this site</a></li>
+        <li><a href="https://github.com/indieweb/php-mf2">Source code for the Microformats PHP Parser</a></li>
+
+        <li>
+          Other Microformats Parser websites:
+          <a href="https://go.microformats.io">Go</a>,
+          <a href="https://node.microformats.io">Node</a>,
+          <a href="https://python.microformats.io">Python</a>, and
+          <a href="https://ruby.microformats.io">Ruby</a>.
+        </li>
+      </ul>
+    </footer>
+
+  </main>
 </body>
 </html>
