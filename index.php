@@ -22,6 +22,12 @@ $debugMsg = array(
 
 $PATH = preg_replace('~index.php$~', '', $_SERVER['SCRIPT_NAME']);
 
+$STORAGE_MODE = getenv('REDIS_URL') ? 'redis' : 'file';
+$EXPIRE_HOURS = 72;
+if($STORAGE_MODE == 'redis') {
+  $redis = new Predis\Client(getenv('REDIS_URL'));
+}
+
 if(get('url')) {
   $url = get('url');
   if(!preg_match('/^http/', $url))
@@ -76,12 +82,25 @@ if(get('url')) {
     list($usec, $sec) = explode(" ", microtime());
     $id = date('YmdHis').sprintf('%03d',round($usec*1000));
     preg_match('/^(\d{6})(\d{11})$/',$id,$match);
-    @mkdir(dirname(__FILE__).'/data/'.$match[1], 0755, true);
-    file_put_contents(dirname(__FILE__).'/data/'.$match[1].'/'.$match[2].'.url', json_encode(array(
-      'url' => $url,
-      'show_html' => post('show_html'),
-    )));
-    file_put_contents(dirname(__FILE__).'/data/'.$match[1].'/'.$match[2].'.html', post('html'));
+
+    if($STORAGE_MODE == 'file') {
+      @mkdir(dirname(__FILE__).'/data/'.$match[1], 0755, true);
+      file_put_contents(dirname(__FILE__).'/data/'.$match[1].'/'.$match[2].'.url', json_encode(array(
+        'url' => $url,
+        'show_html' => post('show_html'),
+      )));
+      file_put_contents(dirname(__FILE__).'/data/'.$match[1].'/'.$match[2].'.html', post('html'));
+    } elseif($STORAGE_MODE == 'redis') {
+      $data = json_encode([
+        'html' => post('html'),
+        'settings' => [
+          'url' => $url,
+          'show_html' => post('show_html')
+        ]
+      ]);
+      $redis->setex('phpmf2-'.$id, $EXPIRE_HOURS*60*60, $data);
+    }
+
     header('Location: '.$scheme.'://'.$_SERVER['SERVER_NAME'].$PATH.'?id='.$id);
   } else {
     $output['debug'] = $debugMsg;
@@ -98,17 +117,32 @@ if(get('url')) {
 } elseif(get('id')) {
 
   if(preg_match('/^(\d{6})(\d{11})$/',get('id'),$match)) {
-    $htmlfile = dirname(__FILE__).'/data/'.$match[1].'/'.$match[2].'.html';
-    $urlfile = dirname(__FILE__).'/data/'.$match[1].'/'.$match[2].'.url';
-    if(!file_exists($htmlfile)) {
+
+    if($STORAGE_MODE == 'file') {
+      $htmlfile = dirname(__FILE__).'/data/'.$match[1].'/'.$match[2].'.html';
+      $urlfile = dirname(__FILE__).'/data/'.$match[1].'/'.$match[2].'.url';
+      $exists = file_exists($htmlfile);
+    } elseif($STORAGE_MODE == 'redis') {
+      $data = $redis->get('phpmf2-'.$match[0]);
+      $exists = $data ?: false;
+    }
+
+    if(!$exists) {
       header('HTTP/1.1 404 Not Found');
       header('Content-Type: text/plain');
       echo 'Not Found';
       die();
     }
 
-    $html = file_get_contents($htmlfile);
-    $settings = json_decode(file_get_contents($urlfile));
+    if($STORAGE_MODE == 'file') {
+      $html = file_get_contents($htmlfile);
+      $settings = json_decode(file_get_contents($urlfile));
+    } elseif($STORAGE_MODE == 'redis') {
+      $data = json_decode($data);
+      $html = $data->html;
+      $settings = $data->settings;
+    }
+
     $url = $settings->url;
     $show_html = $settings->show_html;
     $save_html = true;

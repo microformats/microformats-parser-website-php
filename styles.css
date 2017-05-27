@@ -13,6 +13,11 @@ form .form-control:disabled {
   color: black;
 }
 
+.help {
+  color: #999;
+  font-weight: normal;
+}
+
 #json {
   font-size: 0.7em;
 }

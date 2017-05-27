@@ -43,7 +43,7 @@
       <div class="form-check">
         <label class="form-check-label" for="save">
           <input id="save" name="save" class="form-check-input" type="checkbox" value="1" checked="checked">
-          Save HTML?
+          Save HTML? <span class="help">(Note: Data older than <?= $EXPIRE_HOURS ?> hours may be purged)</span>
         </label>
       </div>
 
