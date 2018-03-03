@@ -111,7 +111,12 @@ if(get('url')) {
     $show_html = post('show_html');
     $save_html = false;
 
-    require('result.php');
+    if(post('format') == 'json') {
+      header('Content-Type: application/json');
+      echo $json;
+    } else {
+      require('result.php');
+    }
   }
 
 } elseif(get('id')) {
