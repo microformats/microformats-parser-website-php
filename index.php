@@ -16,6 +16,7 @@ $debugMsg = array(
   'version' => $version,
   'note' => array(
     'This output was generated from the php-mf2 library available at https://github.com/indieweb/php-mf2',
+    'Using the masterminds/html5 HTML parser',
     'Please file any issues with the parser at https://github.com/indieweb/php-mf2/issues'
   )
 );
@@ -41,6 +42,7 @@ if(get('url')) {
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+  curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
 
   if(get('debug')) {
       curl_setopt($ch, CURLOPT_SSLVERSION,3);

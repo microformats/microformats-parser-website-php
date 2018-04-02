@@ -1,8 +1,9 @@
 {
   "require": {
     "php": "^5.6.0",
-    "mf2/mf2": ">=0.4.0",
+    "mf2/mf2": ">=0.4.3",
     "predis/predis": "^1.1",
-    "ext-mbstring": "*"
+    "ext-mbstring": "*",
+    "masterminds/html5": "^2.3"
   }
 }
