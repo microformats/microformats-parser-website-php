@@ -7,19 +7,28 @@ $composer = json_decode(file_get_contents(dirname(__FILE__).'/composer.lock'));
 $version = 'unknown';
 foreach($composer->packages as $pkg) {
   if($pkg->name == 'mf2/mf2') {
-    $version = $pkg->version;
+    if($pkg->version == 'dev-master') {
+      $version = substr($pkg->source->reference,0,7);
+    } else {
+      $version = $pkg->version;
+    }
   }
 }
 
 $debugMsg = array(
   'package' => 'https://packagist.org/packages/mf2/mf2',
+  'source' => 'https://github.com/indieweb/php-mf2',
   'version' => $version,
   'note' => array(
     'This output was generated from the php-mf2 library available at https://github.com/indieweb/php-mf2',
-    'Using the masterminds/html5 HTML parser',
     'Please file any issues with the parser at https://github.com/indieweb/php-mf2/issues'
   )
 );
+
+if(class_exists('Masterminds\\HTML5')) {
+  $debugMsg['note'][] = 'Using the Masterminds HTML5 parser';
+}
+
 
 $PATH = preg_replace('~index.php$~', '', $_SERVER['SCRIPT_NAME']);
 
@@ -59,6 +68,7 @@ if(get('url')) {
 
   $url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
   $parser = new Parser($html, $url, true);
+  $parser->lang = true;
   $output = $parser->parse();
   $output['debug'] = $debugMsg;
 
@@ -77,6 +87,7 @@ if(get('url')) {
     $url = 'http://' . $url;
 
   $parser = new Parser(post('html'), $url, true);
+  $parser->lang = true;
   $output = $parser->parse();
 
   if(post('save') == 1) {
@@ -155,6 +166,7 @@ if(get('url')) {
     $save_html = true;
 
     $parser = new Parser($html, $url, true);
+    $parser->lang = true;
     $output = $parser->parse();
     $output['debug'] = $debugMsg;
     $json = json_encode($output, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
