@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "fddcdd6c6bc58e2afd7d7b5ed8a4e8f8",
+    "content-hash": "b30ac7b992bb08f0fc19801efd9b1c6b",
     "packages": [
         {
             "name": "masterminds/html5",
@@ -73,16 +73,16 @@
         },
         {
             "name": "mf2/mf2",
-            "version": "v0.4.3",
+            "version": "v0.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/indieweb/php-mf2.git",
-                "reference": "5c056e81f48b71130dab98de755683bb2b7e7615"
+                "reference": "35fee8b6481695438a44f336534b4cd782bcd518"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/indieweb/php-mf2/zipball/5c056e81f48b71130dab98de755683bb2b7e7615",
-                "reference": "5c056e81f48b71130dab98de755683bb2b7e7615",
+                "url": "https://api.github.com/repos/indieweb/php-mf2/zipball/35fee8b6481695438a44f336534b4cd782bcd518",
+                "reference": "35fee8b6481695438a44f336534b4cd782bcd518",
                 "shasum": ""
             },
             "require": {
@@ -125,7 +125,7 @@
                 "parser",
                 "semantic"
             ],
-            "time": "2018-03-29T17:54:32+00:00"
+            "time": "2018-08-02T17:12:58+00:00"
         },
         {
             "name": "predis/predis",
