@@ -68,8 +68,8 @@
     <footer class="my-5">
       <ul>
         <li><a href="https://microformats.io">About Microformats</a></li>
-        <li><a href="https://github.com/aaronpk/mf2-parser-website">Source code for this site</a></li>
-        <li><a href="https://github.com/indieweb/php-mf2">Source code for the Microformats PHP Parser</a></li>
+        <li><a href="https://github.com/indieweb/microformats-parser-website-php">Source code for this site</a></li>
+        <li><a href="https://github.com/microformats/php-mf2">Source code for the Microformats PHP Parser</a></li>
 
         <li>
           Other Microformats Parser websites:
