@@ -19,7 +19,7 @@
     </h1>
 
     <?php if($error): ?>
-      <div class="alert alert-danger" role="alert"><?php echo htmlspecialchars($error); ?></div>
+      <div class="alert alert-danger" role="alert" style="white-space: pre-wrap;"><?php echo htmlspecialchars($error); ?></div>
     <?php else: ?>
       <div class="alert alert-success" role="alert">Valid Microformats JSON!</div>
     <?php endif ?>
