@@ -70,6 +70,18 @@ function is_valid_mf2_object($input) {
 		}
 	}
 
+	if(isset($input->children)) {
+		if(!is_array($input->children))
+			return [false, 'The "children" property must be an array'];
+
+		foreach($input->children as $child) {
+			list($valid, $error) = is_valid_mf2_object($child);
+			if(!$valid) {
+				return [false, 'One of the child objects was not valid: '.$error];
+			}
+		}
+	}
+
 	return [true, null];
 }
 
