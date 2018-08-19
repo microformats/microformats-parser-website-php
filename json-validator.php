@@ -53,16 +53,23 @@ function is_valid_mf2_object($input) {
 
 		// If a value of a property is not a string, it must be a valid mf2 object
 		foreach($property as $k=>$val) {
-			// e-* get parsed as objects
 			if(is_object($val)) {
-				if(!property_exists($val, 'value'))
-					return [false, 'Object '.$k.' is missing the "value" property'];
+				// Try to detect e- parsed objects
+				if(property_exists($val, 'value') && !property_exists($val, 'html')) 
+					return [false, 'One of the values of '.$key.' is missing the "html" property'];
 
-				if(!property_exists($val, 'html'))
-					return [false, 'Object '.$k.' is missing the "html" property'];
+				if(property_exists($val, 'html') && !property_exists($val, 'value'))
+					return [false, 'One of the values of '.$key.' is missing the "value" property'];
+
+				// Otherwise this must be a nested object
+				list($valid, $error) = is_valid_mf2_object($val);
+				if(!$valid)
+					return [false, 'One of the values of "'.$key.'" is not a valid mf2 object: '.$error];
+
 			} else if(!is_string($val)) {
 				if(is_numeric($val))
 					return [false, 'One of the values of "'.$key.'" is a number instead of a string'];
+
 				list($valid, $error) = is_valid_mf2_object($val);
 				if($error)
 					return [false, 'One of the values of "'.$key.'" is not a valid mf2 object'];
