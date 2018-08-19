@@ -32,8 +32,8 @@
 
       <div class="form-group">
         <select name="input-type" class="form-control">
-          <option value="list">List of items (full mf2 parsed result)</option>
-          <option value="single">Single mf2 object</option>
+          <option value="list" <?php echo post('input-type') == 'list' ? 'checked="checked"' : '' ?>>List of items (full mf2 parsed result)</option>
+          <option value="single" <?php echo post('input-type') == 'single' ? 'checked="checked"' : '' ?>>Single mf2 object</option>
         </select>
       </div>
 
