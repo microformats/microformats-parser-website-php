@@ -28,7 +28,7 @@
       <button type="submit" class="btn btn-lg btn-success">Parse</button>
     </form>
 
-    <h2 class="h4 my-5">OR parse just a snippet of HTML</h2>
+    <h2 class="h4 my-5">Parse a snippet of HTML</h2>
 
     <form method="post" action="<?= $PATH ?>" class="mb-5">
       <div class="form-group">
@@ -43,7 +43,7 @@
 
       <div class="form-check">
         <label class="form-check-label" for="save">
-          <input id="save" name="save" class="form-check-input" type="checkbox" value="1" checked="checked">
+          <input id="save" name="save" class="form-check-input" type="checkbox" value="1">
           Save HTML? <span class="help">(Note: Data older than <?= $EXPIRE_HOURS ?> hours may be purged)</span>
         </label>
       </div>
@@ -56,6 +56,24 @@
       </div>
 
       <button type="submit" class="btn btn-lg btn-success">Parse</button>
+    </form>
+
+    <h2 class="h4 my-5" id="json">Validate MF2 JSON</h2>
+
+    <form method="post" action="<?= $PATH ?>" class="mb-5">
+      <div class="form-group">
+        <label for="json">JSON</label>
+        <textarea id="json-input" name="json" rows="6" class="form-control form-control-lg"></textarea>
+      </div>
+
+      <div class="form-group">
+        <select name="input-type" class="form-control">
+          <option value="list">List of items (full mf2 parsed result)</option>
+          <option value="single">Single mf2 object</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-lg btn-success">Validate</button>
     </form>
 
     <hr>

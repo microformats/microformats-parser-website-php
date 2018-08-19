@@ -46,7 +46,7 @@
 
       <div class="form-group">
         <label for="json">JSON</label>
-        <textarea id="json" name="json" rows="24" class="form-control form-control-lg" readonly><?= htmlspecialchars($json) ?></textarea>
+        <textarea id="json-input" name="json" rows="24" class="form-control form-control-lg" readonly><?= htmlspecialchars($json) ?></textarea>
       </div>
 
       <button type="submit" class="btn btn-lg btn-success">Parse</button>

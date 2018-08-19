@@ -18,11 +18,15 @@ form .form-control:disabled {
   font-weight: normal;
 }
 
-#json {
+#json-input {
   font-size: 0.7em;
 }
 
 /* disable bootstrap animations */
 .form-control, .btn {
   transition: none;
+}
+
+.emoji-result {
+  font-size: 40pt;
 }

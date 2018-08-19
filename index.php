@@ -132,6 +132,26 @@ if(get('url')) {
     }
   }
 
+} elseif(post('json')) {
+
+  require('json-validator.php');
+
+  // Validate MF2 JSON
+  $data = json_decode(post('json'));
+  if(!$data) {
+    $json = post('json');
+    $valid = false;
+    $error = 'The input was not valid JSON';
+  } else {
+    $json = json_encode($data, JSON_PRETTY_PRINT+JSON_UNESCAPED_SLASHES);
+    if(post('input-type') == 'list')
+      list($valid, $error) = is_valid_mf2_list($data);
+    else
+      list($valid, $error) = is_valid_mf2_object($data);
+  }
+
+  require('json-result.php');
+
 } elseif(get('id')) {
 
   if(preg_match('/^(\d{6})(\d{11})$/',get('id'),$match)) {
