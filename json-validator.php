@@ -38,17 +38,17 @@ function is_valid_mf2_object($input, $level=0) {
 	if(!is_array($input->type))
 		return [false, $indent.'The "type" property is not an array'];
 
+  // Every value of type must be a string beginning with h-
+  foreach($input->type as $type) {
+    if(!is_string($type) || substr($type, 0, 2) != 'h-')
+      return [false, $indent.'Every type must be an h-* value, got: "'.$type.'"'];
+  }
+
 	if(!isset($input->properties))
 		return [false, $indent.'Item is missing the "properties" property'];
 
 	if(!is_object($input->properties))
 		return [false, $indent.'The "properties" property is not an object'];
-
-	// Every value of type must be a string beginning with h-
-	foreach($input->type as $type) {
-		if(!is_string($type) || substr($type, 0, 2) != 'h-')
-			return [false, $indent.'Every type must be an h-* value, got: "'.$type.'"'];
-	}
 
 	foreach($input->properties as $key=>$property) {
 		// Every property must be an array
@@ -58,17 +58,19 @@ function is_valid_mf2_object($input, $level=0) {
 		// If a value of a property is not a string, it must be a valid mf2 object
 		foreach($property as $k=>$val) {
 			if(is_object($val)) {
-				// Try to detect e- parsed objects
-				if(property_exists($val, 'value') && !property_exists($val, 'html')) 
-					return [false, $indent.'One of the values of '.$key.' is missing the "html" property'];
+        if(!property_exists($val, 'type')) {
+  				// Try to detect e- parsed objects
+  				if(property_exists($val, 'value') && !property_exists($val, 'html'))
+  					return [false, $indent.'One of the values of '.$key.' is missing the "html" property'];
 
-				if(property_exists($val, 'html') && !property_exists($val, 'value'))
-					return [false, $indent.'One of the values of '.$key.' is missing the "value" property'];
-
-				// Otherwise this must be a nested object
-				list($valid, $error) = is_valid_mf2_object($val, $level+1);
-				if(!$valid)
-					return [false, $indent.'One of the values of "'.$key.'" is not a valid mf2 object:'."\n".$error];
+  				if(property_exists($val, 'html') && !property_exists($val, 'value'))
+  					return [false, $indent.'One of the values of '.$key.' is missing the "value" property'];
+        } else {
+  				// Otherwise this must be a nested object
+  				list($valid, $error) = is_valid_mf2_object($val, $level+1);
+  				if(!$valid)
+  					return [false, $indent.'One of the values of "'.$key.'" is not a valid mf2 object:'."\n".$error];
+        }
 
 			} else if(!is_string($val)) {
 				if(is_numeric($val))
