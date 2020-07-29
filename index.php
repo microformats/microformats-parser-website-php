@@ -53,6 +53,10 @@ if(get('url')) {
       die();
   }
 
+  if ($page['error'] !== '') {
+    $debugMsg = ['error' => [ 'type' => $page['error'], 'description' => $page['error_description'] ]] + $debugMsg;
+  }
+
   $parser = new Parser($page['body'], $page['url'], true);
   $parser->lang = true;
   $output = $parser->parse();
