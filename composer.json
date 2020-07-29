@@ -4,6 +4,7 @@
     "mf2/mf2": ">=0.4.5",
     "predis/predis": "^1.1",
     "ext-mbstring": "*",
-    "masterminds/html5": "^2.3"
+    "masterminds/html5": "^2.3",
+    "p3k/http": "^0.1.11"
   }
 }
