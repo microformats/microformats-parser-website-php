@@ -5,7 +5,7 @@ https://php.microformats.io
 
 ## Deployment
 
-All commits to the `master` branch get auto-deployed to the live website (running on [Heroku](https://php.microformats.io))
+All commits to the `main` branch get auto-deployed to the live website (running on [Heroku](https://php.microformats.io))
 
 
 ## Requirements
@@ -25,7 +25,7 @@ cd microformats-php-parser-website
 Install the dependencies:
 
 ```
-TODO
+composer install
 ```
 
 Start the server:
