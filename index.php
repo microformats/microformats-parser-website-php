@@ -43,7 +43,7 @@ if(get('url')) {
   if(!preg_match('/^http/', $url))
     $url = 'http://' . $url;
 
-  $client = new p3k\HTTP('Microformats2 parser '.$version.' (via '.$_SERVER['SERVER_NAME'].$PATH.') Mozilla/5.0 Chrome/29.0.1547.57 Safari/537.36');
+  $client = new p3k\HTTP('php.microformats.io (php-mf2/' . $version . ') Mozilla/5.0 Chrome/29.0.1547.57 Safari/537.36');
   $headers = ['Accept: text/html, */*'];
   $page = $client->get($url);
 
